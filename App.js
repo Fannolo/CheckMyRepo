@@ -1,51 +1,49 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
-import {Home} from './screens';
+import {Home, InputScreen} from './screens';
 import {createStackNavigator} from '@react-navigation/stack';
-import {TouchableOpacity, Text} from 'react-native';
+import {colors} from './configs';
+import {StatusBar} from 'react-native';
+
+const DEFAULT_OPTIONS = {
+  headerTitleAlign: 'left',
+  title: 'Set the repository address',
+  headerStyle: {
+    borderColor: colors.white,
+    borderWidth: 0,
+    shadowColor: 'transparent',
+    elevation: 0,
+    backgroundColor: colors.white,
+  },
+  headerTitleStyle: {
+    textAlign: 'left',
+    fontWeight: '600',
+  },
+  headerTintColor: colors.black,
+  // headerLeft: () => (
+  //   <TouchableOpacity onPress={() => alert('This is a button!')}>
+  //     <Text color="#000">⃪</Text>
+  //   </TouchableOpacity>
+  // ),
+};
 
 const Stack = createStackNavigator();
-// const App = () => {
-//   return (
-//     <>
-//       <StatusBar hidden />
-//       <SafeAreaView>
-//         <ScrollView style={styles.appContainer}>
-//           <Text>ciao</Text>
-//         </ScrollView>
-//       </SafeAreaView>
-//     </>
-//   );
-// };
 export default function App() {
   return (
     <NavigationContainer>
+      <StatusBar barStyle={'dark-content'} />
       <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} options={DEFAULT_OPTIONS} />
         <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            headerTitleAlign: 'left',
-            title: 'Set the repository address',
-            headerStyle: {
-              borderColor: '#fff',
-              borderBottomWidth: 0,
-              shadowColor: 'transparent',
-              elevation: 0,
-              backgroundColor: '#fff',
-            },
-            headerTitleStyle: {
-              textAlign: 'left',
-              fontWeight: '600',
-            },
-            headerTintColor: '#000',
-            // headerLeft: () => (
-            //   <TouchableOpacity onPress={() => alert('This is a button!')}>
-            //     <Text color="#000">Info</Text>
-            //   </TouchableOpacity>
-            // ),
-          }}
+          name="User"
+          component={InputScreen}
+          options={DEFAULT_OPTIONS}
+        />
+        <Stack.Screen
+          name="Repository"
+          component={InputScreen}
+          options={DEFAULT_OPTIONS}
         />
       </Stack.Navigator>
     </NavigationContainer>
