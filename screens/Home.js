@@ -8,6 +8,8 @@ export function Home({navigation}) {
   const [error, setError] = useState(false);
   const [repository, setRepository] = useState('repo');
   const [user, setUser] = useState('user');
+  const [textColor, setTextColor] = useState(colors.grey);
+  const [repositoryTextColor, setRepositoryTextColor] = useState(colors.grey);
 
   const color = error ? colors.salmon : colors.white;
 
@@ -31,24 +33,28 @@ export function Home({navigation}) {
         <Text style={[styles.text]}>github.com</Text>
         <TouchableText
           text={user}
+          color={textColor}
           onPress={() => {
             navigation.navigate('User', {
               navigationTitle: 'USER',
               placeholder: 'Type your github username',
               setValue: (value) => {
                 setUser(value);
+                setTextColor(colors.black);
               },
             });
           }}
         />
         <TouchableText
           text={repository}
+          color={repositoryTextColor}
           onPress={() => {
             navigation.navigate('Repository', {
               navigationTitle: 'REPOSITORY',
               placeholder: 'Type your repository name',
               setValue: (value) => {
                 setRepository(value);
+                setRepositoryTextColor(colors.black);
               },
             });
           }}
