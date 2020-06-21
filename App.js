@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
-import {Home, InputScreen} from './screens';
+import {Home, InputScreen, ThankYou} from './screens';
 import {createStackNavigator} from '@react-navigation/stack';
 import {colors} from './configs';
 import {StatusBar} from 'react-native';
@@ -54,6 +54,11 @@ export default function App() {
             ...DEFAULT_OPTIONS,
             title: route.params?.navigationTitle,
           })}
+        />
+        <Stack.Screen
+          name="ThankYou"
+          component={ThankYou}
+          options={{...DEFAULT_OPTIONS, headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

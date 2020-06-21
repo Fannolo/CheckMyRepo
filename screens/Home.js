@@ -24,6 +24,7 @@ export function Home({navigation}) {
       buttonOnPress={() => {
         //TODO: VALIDATE THE URL
         alert('ciao');
+        navigation.navigate('ThankYou');
       }}>
       <View style={{flex: 1}}>
         <Text style={[styles.text]}>github.com</Text>

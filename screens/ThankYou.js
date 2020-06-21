@@ -1,16 +1,25 @@
 import React, {useState} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {MainTemplate} from '../template';
 
-export function ThankYou() {
+export function ThankYou({navigation}) {
   // Declare a new state variable, which we'll call "count"
-  const [count, setCount] = useState(0);
-
   return (
-    <View>
-      <Text>You clicked {count} times</Text>
-      <TouchableOpacity onPress={() => setCount(count + 1)}>
-        <Text>Click me</Text>
-      </TouchableOpacity>
-    </View>
+    <MainTemplate
+      buttonText={'COOL'}
+      buttonOnPress={() => {
+        navigation.goBack();
+      }}>
+      <Text style={styles.thankyou}>{'All done!\nRepository sent.'}</Text>
+    </MainTemplate>
   );
 }
+
+const styles = StyleSheet.create({
+  thankyou: {
+    fontSize: 40,
+    textAlign: 'center',
+    marginTop: 100,
+    fontWeight: '700',
+  },
+});
