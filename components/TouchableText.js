@@ -6,7 +6,7 @@ export function TouchableText(props) {
   return (
     <View style={[styles.buttonContainer]}>
       <Text style={[styles.text]}>/</Text>
-      <TouchableOpacity onPress={props.onPress()}>
+      <TouchableOpacity onPress={() => props.onPress()}>
         <Text style={[styles.touchableText]}>{props.text}</Text>
       </TouchableOpacity>
     </View>
