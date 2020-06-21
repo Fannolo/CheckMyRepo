@@ -8,7 +8,7 @@ import {StatusBar} from 'react-native';
 
 const DEFAULT_OPTIONS = {
   headerTitleAlign: 'left',
-  title: 'Set the repository address',
+
   headerStyle: {
     borderColor: colors.white,
     borderWidth: 0,
@@ -34,16 +34,26 @@ export default function App() {
     <NavigationContainer>
       <StatusBar barStyle={'dark-content'} />
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} options={DEFAULT_OPTIONS} />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{...DEFAULT_OPTIONS, title: 'Set the repository address'}}
+        />
         <Stack.Screen
           name="User"
           component={InputScreen}
-          options={DEFAULT_OPTIONS}
+          options={({route}) => ({
+            ...DEFAULT_OPTIONS,
+            title: route.params?.navigationTitle,
+          })}
         />
         <Stack.Screen
           name="Repository"
           component={InputScreen}
-          options={DEFAULT_OPTIONS}
+          options={({route}) => ({
+            ...DEFAULT_OPTIONS,
+            title: route.params?.navigationTitle,
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

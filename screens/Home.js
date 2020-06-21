@@ -30,13 +30,13 @@ export function Home({navigation}) {
         <TouchableText
           text={'user'}
           onPress={() => {
-            navigation.navigate('User');
+            navigation.navigate('User', {navigationTitle: 'USER'});
           }}
         />
         <TouchableText
           text={'repo'}
           onPress={() => {
-            navigation.navigate('Repository');
+            navigation.navigate('Repository', {navigationTitle: 'REPOSITORY'});
           }}
         />
       </View>
