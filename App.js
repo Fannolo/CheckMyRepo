@@ -29,7 +29,6 @@ export default function App() {
             headerTitleAlign: 'left',
             title: 'Set the repository address',
             headerStyle: {
-              marginTop: 0,
               borderColor: '#fff',
               borderBottomWidth: 0,
               shadowColor: 'transparent',
