@@ -1,6 +1,17 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
+import {MainTemplate} from '../template';
 
 export function InputScreen() {
-  return <View></View>;
+  return (
+    <MainTemplate
+      buttonText={'DONE'}
+      buttonOnPress={() => {
+        alert('ciao');
+      }}>
+      <View>
+        <Text>ciao</Text>
+      </View>
+    </MainTemplate>
+  );
 }
