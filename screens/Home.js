@@ -6,6 +6,8 @@ import {MainTemplate} from '../template';
 
 export function Home({navigation}) {
   const [error, setError] = useState(false);
+  const [repository, setRepository] = useState('repo');
+  const [user, setUser] = useState('user');
 
   const color = error ? colors.salmon : colors.white;
 
@@ -23,21 +25,32 @@ export function Home({navigation}) {
       buttonText={'CHECK'}
       buttonOnPress={() => {
         //TODO: VALIDATE THE URL
-        alert('ciao');
         navigation.navigate('ThankYou');
       }}>
       <View style={{flex: 1}}>
         <Text style={[styles.text]}>github.com</Text>
         <TouchableText
-          text={'user'}
+          text={user}
           onPress={() => {
-            navigation.navigate('User', {navigationTitle: 'USER'});
+            navigation.navigate('User', {
+              navigationTitle: 'USER',
+              placeholder: 'Type your github username',
+              setValue: (value) => {
+                setUser(value);
+              },
+            });
           }}
         />
         <TouchableText
-          text={'repo'}
+          text={repository}
           onPress={() => {
-            navigation.navigate('Repository', {navigationTitle: 'REPOSITORY'});
+            navigation.navigate('Repository', {
+              navigationTitle: 'REPOSITORY',
+              placeholder: 'Type your repository name',
+              setValue: (value) => {
+                setRepository(value);
+              },
+            });
           }}
         />
       </View>
