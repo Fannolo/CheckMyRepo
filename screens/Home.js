@@ -12,10 +12,9 @@ export function Home({navigation}) {
   const [error, setError] = useState(null);
   const [repository, setRepository] = useState('repo');
   const [user, setUser] = useState('user');
+  const [backgroundColor, setBackgroundColor] = useState(colors.white);
   const [textColor, setTextColor] = useState(colors.grey);
   const [repositoryTextColor, setRepositoryTextColor] = useState(colors.grey);
-
-  const color = error ? colors.salmon : colors.white;
 
   const BoldText = (props) => (
     <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
@@ -24,30 +23,51 @@ export function Home({navigation}) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: {
-        backgroundColor: color,
+        backgroundColor: backgroundColor,
       },
     });
   });
 
   return (
     <MainTemplate
-      backgroundColor={color}
+      backgroundColor={backgroundColor}
       buttonText={'CHECK'}
       buttonOnPress={async () => {
         await NetInfo.fetch()
           .then(async ({isConnected}) => {
             if (isConnected) {
               await Axios.get(`https://github.com/${user}/${repository}`)
-                .then((res) => {
+                .then(async (res) => {
+                  setBackgroundColor(colors.green);
+                  setError(null);
                   console.log('Success: ', res);
-                  //TODO call the pushservice
-                  navigation.navigate('ThankYou');
+                  await Axios.post(
+                    //'https://pushmore.io/webhook/d3Gm4aEPCuhAUjfbECLLdW41',
+                    'https://pushmore.io/webhook/4UygV3zUCYTNC2WA51CMyS79',
+                    {
+                      repoUrl: `https://github.com/${user}/${repository}`,
+                      sender: user,
+                    },
+                  )
+                    .then((res) => {
+                      if (res.data !== 'OK') {
+                        setError(NETWORK_ERROR);
+                        setBackgroundColor(colors.salmon);
+                      }
+                      console.log('Sending the push: ', res);
+                    })
+                    .catch((e) => {
+                      console.log('error sending the push: ', e.response);
+                      setError(NETWORK_ERROR);
+                    });
                 })
                 .catch((error) => {
                   console.log('Error: ', error.response);
                   setError(SERVICE_ERROR);
+                  setBackgroundColor(colors.salmon);
                 });
             } else {
+              setBackgroundColor(colors.salmon);
               setError(NETWORK_ERROR);
             }
           })
@@ -67,6 +87,7 @@ export function Home({navigation}) {
               setValue: (value) => {
                 setUser(value);
                 setError(null);
+                setBackgroundColor(colors.white);
                 setTextColor(colors.black);
               },
             });
@@ -82,6 +103,7 @@ export function Home({navigation}) {
               setValue: (value) => {
                 setRepository(value);
                 setError(null);
+                setBackgroundColor(colors.white);
                 setRepositoryTextColor(colors.black);
               },
             });
