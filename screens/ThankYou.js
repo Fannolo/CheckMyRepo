@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: 'center',
     marginTop: 100,
-    fontWeight: '700',
+    fontFamily: 'OpenSans-Bold',
   },
 });

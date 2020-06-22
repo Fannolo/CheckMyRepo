@@ -190,7 +190,7 @@ Home.navigationOptions = {
 const styles = StyleSheet.create({
   text: {
     fontSize: 35,
-    fontWeight: '600',
+    fontFamily: 'OpenSans',
   },
   errorMessage: {
     marginRight: 160,

@@ -10,7 +10,7 @@ export function TouchableText(props) {
         <Text
           style={{
             fontSize: 35,
-            fontWeight: '600',
+            fontFamily: 'OpenSans-SemiBold',
             color: props.color ? props.color : colors.grey,
           }}>
           {props.text}
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   text: {
+    fontFamily: 'OpenSans-Regular',
     fontSize: 35,
-    fontWeight: '600',
   },
 });

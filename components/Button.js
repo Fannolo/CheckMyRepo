@@ -17,7 +17,7 @@ export function Button(props) {
 const styles = StyleSheet.create({
   text: {
     fontSize: 20,
+    fontFamily: 'OpenSans-Bold',
     color: colors.black,
-    fontWeight: '700',
   },
 });

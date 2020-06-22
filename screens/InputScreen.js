@@ -35,6 +35,7 @@ export function InputScreen({navigation, route}) {
 const styles = StyleSheet.create({
   textInput: {
     height: 40,
+    fontFamily: 'OpenSans-Regular',
     fontSize: 20,
     borderColor: colors.black,
     borderBottomWidth: 2,
