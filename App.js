@@ -4,7 +4,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {Home, InputScreen, ThankYou} from './screens';
 import {createStackNavigator} from '@react-navigation/stack';
 import {colors} from './configs';
-import {StatusBar, TouchableOpacity, Image, Text} from 'react-native';
+import {
+  StatusBar,
+  TouchableOpacity,
+  Image,
+  Text,
+  StyleSheet,
+} from 'react-native';
 
 const DEFAULT_OPTIONS = {
   headerTitleAlign: 'left',
@@ -23,9 +29,18 @@ const DEFAULT_OPTIONS = {
   headerTintColor: colors.black,
 };
 
+const renderHeaderLeft = (navigation) => (
+  <TouchableOpacity onPress={() => navigation.goBack()}>
+    <Image
+      resizeMode={'contain'}
+      style={{width: 30, height: 20, marginLeft: 15}}
+      source={require('./assets/back.png')}
+    />
+  </TouchableOpacity>
+);
+
 const Stack = createStackNavigator();
 export default function App() {
-  //const back = require('./assets/back@3x.png');
   return (
     <NavigationContainer>
       <StatusBar barStyle={'dark-content'} />
@@ -41,26 +56,16 @@ export default function App() {
           options={({route, navigation}) => ({
             ...DEFAULT_OPTIONS,
             title: route.params?.navigationTitle,
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                {/* <Image style={{width: 200, height: 200}} source={back} /> */}
-                <Text
-                  allowFontScaling={false}
-                  fontSize={30}
-                  width={20}
-                  height={20}>
-                  ⃪
-                </Text>
-              </TouchableOpacity>
-            ),
+            headerLeft: () => renderHeaderLeft(navigation),
           })}
         />
         <Stack.Screen
           name="Repository"
           component={InputScreen}
-          options={({route}) => ({
+          options={({route, navigation}) => ({
             ...DEFAULT_OPTIONS,
             title: route.params?.navigationTitle,
+            headerLeft: () => renderHeaderLeft(navigation),
           })}
         />
         <Stack.Screen
