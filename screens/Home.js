@@ -187,7 +187,7 @@ export function Home({navigation}) {
 const styles = StyleSheet.create({
   text: {
     fontSize: 35,
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
   },
   errorMessage: {
     marginRight: 160,
