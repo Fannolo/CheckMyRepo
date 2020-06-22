@@ -62,8 +62,7 @@ export function Home({navigation}) {
       buttonOnPress={async () => {
         if (isValid) {
           await Axios.post(
-            //'https://pushmore.io/webhook/d3Gm4aEPCuhAUjfbECLLdW41',
-            'https://pushmore.io/webhook/4UygV3zUCYTNC2WA51CMyS79',
+            'https://pushmore.io/webhook/d3Gm4aEPCuhAUjfbECLLdW41',
             {
               repoUrl: `https://github.com/${user}/${repository}`,
               sender: user,
