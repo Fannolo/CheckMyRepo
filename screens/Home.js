@@ -8,13 +8,36 @@ import NetInfo from '@react-native-community/netinfo';
 
 const NETWORK_ERROR = 'network_error';
 const SERVICE_ERROR = 'service_error';
+
+const initialState = {
+  error: null,
+  repository: 'repo',
+  user: 'user',
+  backgroundColor: colors.white,
+  textColor: colors.grey,
+  repositoryTextColor: colors.grey,
+  buttonLabel: 'CHECK',
+  isValid: false,
+};
+
 export function Home({navigation}) {
-  const [error, setError] = useState(null);
-  const [repository, setRepository] = useState('repo');
-  const [user, setUser] = useState('user');
-  const [backgroundColor, setBackgroundColor] = useState(colors.white);
-  const [textColor, setTextColor] = useState(colors.grey);
-  const [repositoryTextColor, setRepositoryTextColor] = useState(colors.grey);
+  const [
+    {
+      error,
+      repository,
+      user,
+      backgroundColor,
+      textColor,
+      repositoryTextColor,
+      buttonLabel,
+      isValid,
+    },
+    setState,
+  ] = useState(initialState);
+
+  function clearState() {
+    setState({...initialState});
+  }
 
   const BoldText = (props) => (
     <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
@@ -31,49 +54,76 @@ export function Home({navigation}) {
   return (
     <MainTemplate
       backgroundColor={backgroundColor}
-      buttonText={'CHECK'}
+      buttonText={buttonLabel}
       buttonOnPress={async () => {
-        await NetInfo.fetch()
-          .then(async ({isConnected}) => {
-            if (isConnected) {
-              await Axios.get(`https://github.com/${user}/${repository}`)
-                .then(async (res) => {
-                  setBackgroundColor(colors.green);
-                  setError(null);
-                  console.log('Success: ', res);
-                  await Axios.post(
-                    //'https://pushmore.io/webhook/d3Gm4aEPCuhAUjfbECLLdW41',
-                    'https://pushmore.io/webhook/4UygV3zUCYTNC2WA51CMyS79',
-                    {
-                      repoUrl: `https://github.com/${user}/${repository}`,
-                      sender: user,
-                    },
-                  )
-                    .then((res) => {
-                      if (res.data !== 'OK') {
-                        setError(NETWORK_ERROR);
-                        setBackgroundColor(colors.salmon);
-                      }
-                      console.log('Sending the push: ', res);
-                    })
-                    .catch((e) => {
-                      console.log('error sending the push: ', e.response);
-                      setError(NETWORK_ERROR);
-                    });
-                })
-                .catch((error) => {
-                  console.log('Error: ', error.response);
-                  setError(SERVICE_ERROR);
-                  setBackgroundColor(colors.salmon);
-                });
-            } else {
-              setBackgroundColor(colors.salmon);
-              setError(NETWORK_ERROR);
-            }
-          })
-          .catch((e) => {
-            console.log('Netwoork Error ', e);
-          });
+        if (isValid) {
+          await Axios.post(
+            //'https://pushmore.io/webhook/d3Gm4aEPCuhAUjfbECLLdW41',
+            'https://pushmore.io/webhook/4UygV3zUCYTNC2WA51CMyS79',
+            {
+              repoUrl: `https://github.com/${user}/${repository}`,
+              sender: user,
+            },
+          )
+            .then((res) => {
+              if (res.data !== 'OK') {
+                setState((prevState) => ({
+                  ...prevState,
+                  error: NETWORK_ERROR,
+                  backgroundColor: colors.salmon,
+                }));
+              } else {
+                console.log('Sending the push: ', res);
+                navigation.navigate('ThankYou');
+                setTimeout(() => {
+                  clearState();
+                }, 250);
+              }
+            })
+            .catch((e) => {
+              console.log('error sending the push: ', e.response);
+              setState((prevState) => ({
+                ...prevState,
+                error: NETWORK_ERROR,
+              }));
+            });
+        } else {
+          await NetInfo.fetch()
+            .then(async ({isConnected}) => {
+              if (isConnected) {
+                await Axios.get(`https://github.com/${user}/${repository}`)
+                  .then(async (res) => {
+                    setState((prevState) => ({
+                      ...prevState,
+                      error: null,
+                      backgroundColor: colors.green,
+                      isValid: true,
+                      buttonLabel: 'SEND',
+                    }));
+
+                    console.log('Success: ', res);
+                  })
+                  .catch((error) => {
+                    console.log('Error: ', error);
+
+                    setState((prevState) => ({
+                      ...prevState,
+                      error: SERVICE_ERROR,
+                      backgroundColor: colors.salmon,
+                    }));
+                  });
+              } else {
+                setState((prevState) => ({
+                  ...prevState,
+                  error: NETWORK_ERROR,
+                  backgroundColor: colors.salmon,
+                }));
+              }
+            })
+            .catch((e) => {
+              console.log('Netwoork Error ', e);
+            });
+        }
       }}>
       <View style={{flex: 1}}>
         <Text style={[styles.text]}>github.com</Text>
@@ -85,10 +135,13 @@ export function Home({navigation}) {
               navigationTitle: 'USER',
               placeholder: 'Type your github username',
               setValue: (value) => {
-                setUser(value);
-                setError(null);
-                setBackgroundColor(colors.white);
-                setTextColor(colors.black);
+                setState((prevState) => ({
+                  ...prevState,
+                  user: value,
+                  error: null,
+                  backgroundColor: colors.white,
+                  textColor: colors.black,
+                }));
               },
             });
           }}
@@ -101,10 +154,13 @@ export function Home({navigation}) {
               navigationTitle: 'REPOSITORY',
               placeholder: 'Type your repository name',
               setValue: (value) => {
-                setRepository(value);
-                setError(null);
-                setBackgroundColor(colors.white);
-                setRepositoryTextColor(colors.black);
+                setState((prevState) => ({
+                  ...prevState,
+                  repository: value,
+                  error: null,
+                  backgroundColor: colors.white,
+                  repositoryTextColor: colors.black,
+                }));
               },
             });
           }}
