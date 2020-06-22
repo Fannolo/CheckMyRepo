@@ -4,13 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {Home, InputScreen, ThankYou} from './screens';
 import {createStackNavigator} from '@react-navigation/stack';
 import {colors} from './configs';
-import {
-  StatusBar,
-  TouchableOpacity,
-  Image,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import {StatusBar, TouchableOpacity, Image} from 'react-native';
 
 const DEFAULT_OPTIONS = {
   headerTitleAlign: 'left',
