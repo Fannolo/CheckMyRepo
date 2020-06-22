@@ -14,7 +14,6 @@ import {
 
 const DEFAULT_OPTIONS = {
   headerTitleAlign: 'left',
-
   headerStyle: {
     borderColor: colors.white,
     borderWidth: 0,
@@ -43,12 +42,15 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar barStyle={'dark-content'} />
+      <StatusBar hidden />
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{...DEFAULT_OPTIONS, title: 'Set the repository address'}}
+          options={() => ({
+            ...DEFAULT_OPTIONS,
+            title: 'Set the repository address',
+          })}
         />
         <Stack.Screen
           name="User"

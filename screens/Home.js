@@ -46,6 +46,10 @@ export function Home({navigation}) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: {
+        borderColor: colors.white,
+        borderWidth: 0,
+        shadowColor: 'transparent',
+        elevation: 0,
         backgroundColor: backgroundColor,
       },
     });
@@ -180,12 +184,6 @@ export function Home({navigation}) {
     </MainTemplate>
   );
 }
-
-Home.navigationOptions = {
-  headerStyle: {
-    backgroundColor: colors.salmon,
-  },
-};
 
 const styles = StyleSheet.create({
   text: {
